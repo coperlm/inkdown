@@ -25,6 +25,9 @@ jobs:
           - os: ubuntu-latest
             platform: 'linux'
             arch: 'x64'
+          - os: ubuntu-latest
+            platform: 'linux'
+            arch: 'arm64'          
 
     runs-on: ${{ matrix.os }}
     env:
@@ -84,8 +87,13 @@ jobs:
       - name: Electron-Linux-x64
         if: matrix.platform == 'linux' && matrix.arch == 'x64'
         run: |
-          npm run build:linux
+          npm run build:linux:x64
 
+      - name: Electron-Linux-arm64
+        if: matrix.platform == 'linux' && matrix.arch == 'x64'
+        run: |
+          npm run build:linux:arm64
+          
       - name: List dist files
         run: ls -R dist
 
