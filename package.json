@@ -20,7 +20,8 @@
     "build:win:arm64": "npm run build && electron-builder --win --arm64 --config",
     "build:mac:x64": "npm run build && electron-builder --mac --x64 --config",
     "build:mac:arm64": "npm run build && electron-builder --mac --arm64 --config",
-    "build:linux": "electron-vite build && electron-builder --linux --config",
+    "build:linux:x64": "electron-vite build && electron-builder --linux --x64 --config",
+    "build:linux:arm64": "electron-vite build && electron-builder --linux --arm64 --config",
     "postpack": "electron-rebuild -f -w better-sqlite3",
     "build:test": "electron-builder --mac --arm64 --config",
     "build:parser": "node src/renderer/src/editor/parser/worker/compiler.js"
