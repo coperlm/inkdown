@@ -131,3 +131,6 @@ jobs:
         with:
           draft: false
           prerelease: true
+          files: |
+            dist/Inkdown*.*
+            dist/latest*.yml
