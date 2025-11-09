@@ -9,8 +9,22 @@ exports.default = async function (context) {
   const onnBin = path.join(resorce, 'app.asar.unpacked/node_modules/onnxruntime-node/bin/napi-v3')
   console.log('onnBin', onnBin)
 
-  if (os.platform() !== 'linux' && fs.existsSync(path.join(onnBin, 'linux'))) {
-    fs.rmSync(path.join(onnBin, 'linux'), { recursive: true, force: true })
+  if (os.platform() === 'linux') {
+    if (fs.existsSync(path.join(onnBin, 'darwin'))) {
+      fs.rmSync(path.join(onnBin, 'darwin'), { recursive: true, force: true })
+    }
+    if (fs.existsSync(path.join(onnBin, 'win32'))) {
+      fs.rmSync(path.join(onnBin, 'win32'), { recursive: true, force: true })
+    }
+    if (os.arch() === 'arm64') {
+      if (fs.existsSync(path.join(onnBin, 'linux/x64'))) {
+        fs.rmSync(path.join(onnBin, 'linux/x64'), { recursive: true, force: true })
+      }
+    } else {
+      if (fs.existsSync(path.join(onnBin, 'linux/arm64'))) {
+        fs.rmSync(path.join(onnBin, 'linux/arm64'), { recursive: true, force: true })
+      }
+    }
   }
   if (os.platform() === 'darwin') {
     if (fs.existsSync(path.join(onnBin, 'win32'))) {
