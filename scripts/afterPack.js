@@ -9,7 +9,7 @@ exports.default = async function (context) {
   const onnBin = path.join(resorce, 'app.asar.unpacked/node_modules/onnxruntime-node/bin/napi-v3')
   console.log('onnBin', onnBin)
 
-  if (fs.existsSync(path.join(onnBin, 'linux'))) {
+  if (os.platform() !== 'linux' && fs.existsSync(path.join(onnBin, 'linux'))) {
     fs.rmSync(path.join(onnBin, 'linux'), { recursive: true, force: true })
   }
   if (os.platform() === 'darwin') {
