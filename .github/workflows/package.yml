@@ -22,6 +22,9 @@ jobs:
           - os: windows-latest
             platform: 'win'
             arch: 'arm64'
+          - os: ubuntu-latest
+            platform: 'linux'
+            arch: 'x64'
 
     runs-on: ${{ matrix.os }}
     env:
@@ -78,6 +81,11 @@ jobs:
         run: |
           npm run build:win:arm64
 
+      - name: Electron-Linux-x64
+        if: matrix.platform == 'linux' && matrix.arch == 'x64'
+        run: |
+          npm run build:linux
+
       - name: List dist files
         run: ls -R dist
 
@@ -101,6 +109,16 @@ jobs:
           echo "OSS_BUCKET=${{ secrets.OSS_BUCKET }}" >> $env:GITHUB_ENV
           echo "REF_NAME=${{ github.ref_name }}" >> $env:GITHUB_ENV
           echo "OS_ARCH=${{ matrix.arch }}" >> $env:GITHUB_ENV
+
+      - name: Set env for Aliyun OSS (Linux)
+        if: matrix.platform == 'linux'
+        run: |
+          echo "OSS_ENDPOINT=${{ secrets.OSS_ENDPOINT }}" >> $GITHUB_ENV
+          echo "OSS_ACCESS_KEY_ID=${{ secrets.OSS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+          echo "OSS_ACCESS_KEY_SECRET=${{ secrets.OSS_ACCESS_KEY_SECRET }}" >> $GITHUB_ENV
+          echo "OSS_BUCKET=${{ secrets.OSS_BUCKET }}" >> $GITHUB_ENV
+          echo "REF_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "OS_ARCH=${{ matrix.arch }}" >> $GITHUB_ENV
 
       - name: Upload to Aliyun OSS
         run: |
