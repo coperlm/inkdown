@@ -132,5 +132,5 @@ jobs:
           draft: false
           prerelease: true
           files: |
-            dist/Inkdown*.*
-            dist/latest*.yml
+            dist/${{ matrix.platform }}/${{ matrix.arch }}/Inkdown*.*
+            dist/${{ matrix.platform }}/${{ matrix.arch }}/latest*.yml
